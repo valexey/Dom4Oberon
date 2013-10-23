@@ -1,5 +1,6 @@
 MODULE Html;
 (* HTML DOM elements *)
+
 IMPORT JS, Js, Dom;
 
 TYPE
