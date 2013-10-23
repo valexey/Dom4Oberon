@@ -1,0 +1,14 @@
+MODULE Browser;
+(* Browser js enviroment - set of global variables and so on *)
+
+IMPORT JS, Js, Html;
+
+PROCEDURE Document*() : Html.Document;
+VAR
+  res : Html.Document;
+BEGIN
+  JS.do("res = document;");
+  RETURN res
+END Document;
+
+END Browser.
