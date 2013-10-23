@@ -1,0 +1,32 @@
+MODULE Js;
+
+IMPORT JS;
+
+TYPE
+   String* = POINTER TO RECORD END;
+
+PROCEDURE MakeStringFromCharArray*(ch : ARRAY OF CHAR) : String;
+VAR
+   res : String;
+   c   : CHAR;
+   i   : INTEGER;
+BEGIN
+   JS.do("res = '';");
+   i := 0;
+   WHILE i < LEN(ch) DO
+      c := ch[i];
+      JS.do("res += JS.String.fromCharCode(c)");
+      INC(i);
+   END;
+   RETURN res
+END MakeStringFromCharArray;
+
+PROCEDURE CharCodeAt*(s : String; n : INTEGER) : INTEGER;
+VAR
+   res : INTEGER;
+BEGIN
+   JS.do("res = s.charCodeAt(n)");
+   RETURN res
+END CharCodeAt;
+ 
+END Js.
