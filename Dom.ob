@@ -1,4 +1,6 @@
 MODULE Dom;
+(* Modern standard DOM elements *)
+
 IMPORT JS, Js;
 
 CONST 
