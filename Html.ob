@@ -1,0 +1,8 @@
+MODULE Html;
+(* HTML DOM elements *)
+IMPORT JS, Js, Dom;
+
+TYPE
+  Document* = POINTER TO RECORD END;
+
+END Html.
