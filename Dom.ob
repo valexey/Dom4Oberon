@@ -1,0 +1,236 @@
+MODULE Dom;
+IMPORT JS, Js;
+
+CONST 
+  elementNode*               = 1;
+  attributeNode*             = 2;
+  textNode*                  = 3;
+  cdataSectionNode*          = 4;
+  entityReferenceNode*       = 5;
+  entityNode*                = 6;
+  processingInstructionNode* = 7;
+  commentNode*               = 8;
+  documentNode*              = 9;
+  documentTypeNode*          = 10;
+  documentFragmentNode*      = 11;
+  notationNode*              = 12;
+
+  documentPositionDisconnected*           = 01H;
+  documentPositionPreceding*              = 02H;
+  documentPositionFollowing*              = 04H;
+  documentPositionContains*               = 08H;
+  documentPositionContainedBy*            = 10H;
+  documentPositionImplementationSpecific* = 20H;
+TYPE
+  Node*         = POINTER TO RECORD END;
+  NodeList*     = POINTER TO RECORD END;
+  Document*     = POINTER TO RECORD END;
+
+(* Node props and methods *)
+PROCEDURE NodeName*(n : Node) : Js.String;
+VAR
+  res : Js.String;
+BEGIN
+  JS.do("res = n.nodeName;");
+  RETURN res
+END NodeName;
+
+PROCEDURE NodeValue*(n : Node) : Js.String;
+VAR
+  res : Js.String;
+BEGIN
+  JS.do("res = n.nodeValue;");
+  RETURN res
+END NodeValue;
+
+PROCEDURE NodeType* (n : Node) : INTEGER;
+VAR
+  res : INTEGER;
+BEGIN
+  JS.do("res = n.nodeType;");
+  RETURN res
+END NodeType;
+
+PROCEDURE ParentNode* (n : Node) : Node;
+VAR
+  res : Node;
+BEGIN
+  JS.do("res = n.parentNode;");
+  RETURN res
+END ParentNode;
+
+PROCEDURE ChildNodes* (n : Node) : NodeList;
+VAR
+  res : NodeList;
+BEGIN
+  JS.do("res = n.childNodes;");
+  RETURN res
+END ChildNodes;
+
+PROCEDURE FirstChild* (n : Node) : Node;
+VAR
+  res : Node;
+BEGIN
+  JS.do("res = n.firstChild;");
+  RETURN res
+END FirstChild;
+
+PROCEDURE LastChild* (n : Node) : Node;
+VAR
+  res : Node;
+BEGIN
+  JS.do("res = n.lastChild;");
+  RETURN res
+END LastChild;
+
+PROCEDURE PreviousSibling* (n : Node) : Node;
+VAR
+  res : Node;
+BEGIN
+  JS.do("res = n.previousSibling;");
+  RETURN res
+END PreviousSibling;
+
+PROCEDURE NextSibling* (n : Node) : Node;
+VAR
+  res : Node;
+BEGIN
+  JS.do("res = n.nextSibling;");
+  RETURN res
+END NextSibling;
+
+PROCEDURE OwnerDocument* (n : Node) : Document;
+VAR
+  res : Document;
+BEGIN
+  JS.do("res = n.ownerDocument;");
+  RETURN res
+END OwnerDocument;
+
+PROCEDURE InsertBefore* (parent, newChild, refChild : Node) : Node;
+VAR
+  res : Node;
+BEGIN
+  JS.do("res = parent.insertBefore(newChild, refChild);");
+  RETURN res
+END InsertBefore;
+
+PROCEDURE ReplaceChild* (parent, newChild, oldChild : Node) : Node;
+VAR
+  res : Node;
+BEGIN
+  JS.do("res = parent.replaceChild(newChild, oldChild);");
+  RETURN res
+END ReplaceChild;
+
+PROCEDURE RemoveChild* (parent, oldChild : Node) : Node;
+VAR
+  res : Node;
+BEGIN
+  JS.do("res = parent.removeChild(oldChild);");
+  RETURN res
+END RemoveChild;
+
+PROCEDURE AppendChild* (parent, newChild : Node) : Node;
+VAR
+  res : Node;
+BEGIN
+  JS.do("res = parent.appendChild(newChild);");
+  RETURN res
+END AppendChild;
+
+PROCEDURE HasChildNodes* (n : Node) : BOOLEAN;
+VAR
+  res : BOOLEAN;
+BEGIN
+  JS.do("res = n.hasChildNodes();");
+  RETURN res
+END HasChildNodes;
+
+PROCEDURE CloneNode* (n : Node; deep : BOOLEAN) : Node;
+VAR
+  res : Node;
+BEGIN
+  JS.do("res = n.cloneNode(deep);");
+  RETURN res
+END CloneNode;
+
+PROCEDURE Normalize* (n : Node);
+BEGIN
+  JS.do("n.normalize();");
+END Normalize;
+
+PROCEDURE BaseUri* (n : Node) : Js.String;
+VAR
+  res : Js.String;
+BEGIN
+  JS.do("res = n.baseURI;");
+  RETURN res
+END BaseUri;
+
+PROCEDURE CompareDocumentPosition* (our, other : Node) : INTEGER;
+VAR
+  res : INTEGER;
+BEGIN
+  JS.do("res = our.compareDocumentPosition(other);");
+  RETURN res
+END CompareDocumentPosition;
+
+PROCEDURE TextContent* (n : Node) : Js.String;
+VAR
+  res : Js.String;
+BEGIN
+  JS.do("res = n.textContent;");
+  RETURN res
+END TextContent;
+
+PROCEDURE LookupPrefix* (n : Node; namespaceUri : Js.String) : Js.String;
+VAR
+  res : Js.String;
+BEGIN
+  JS.do("res = n.lookupPrefix(namespaceURI)");
+  RETURN res
+END LookupPrefix;
+
+PROCEDURE IsDefaultNamespace* (n : Node; namespaceUri : Js.String) : BOOLEAN;
+VAR
+  res : BOOLEAN;
+BEGIN
+  JS.do("res = n.isDefaultNamespace(namespaceUri);");
+  RETURN res
+END IsDefaultNamespace;
+
+PROCEDURE LookupNamespaceUri* (n : Node; prefix : Js.String) : Js.String;
+VAR
+  res : Js.String;
+BEGIN
+  JS.do("res = n.lookupNamespaceURI(prefix);");
+  RETURN res
+END LookupNamespaceUri;
+
+PROCEDURE IsEqualNode* (n, arg : Node) : BOOLEAN;
+VAR
+  res : BOOLEAN;
+BEGIN
+  JS.do("res = n.isEqualNode(arg);");
+  RETURN res
+END IsEqualNode;
+
+(* NodeList props and methods *)
+PROCEDURE ListItem* (l : NodeList; index : INTEGER) : Node;
+VAR
+  res : Node;
+BEGIN
+  JS.do("res = l.item(index);");
+  RETURN res;
+END ListItem;
+
+PROCEDURE ListLength* (l : NodeList) : INTEGER;
+VAR
+  res : INTEGER;
+BEGIN
+  JS.do("res = l.length;");
+  RETURN res
+END ListLength;
+
+END Dom.
